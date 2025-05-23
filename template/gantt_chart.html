@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gantt Chart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #eef3f9;
+      padding: 40px;
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #3742fa;
+    }
+
+    .gantt {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      border: 2px dashed #dcdde1;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .block {
+      padding: 12px 18px;
+      margin-right: 8px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      background-color: #6c5ce7;
+      min-width: 60px;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .block:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .block div {
+      font-size: 11px;
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    a {
+      margin-top: 30px;
+      display: inline-block;
+      color: #0984e3;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Gantt Chart</h2>
+
+  <div class="gantt">
+    {% for p in schedule %}
+      {% if p.start_time is not none and p.completion_time is not none %}
+        <div class="block" style="width: {{ (p.completion_time - p.start_time) * 30 }}px;">
+          {{ p.pid }}
+          <div>{{ p.start_time }} - {{ p.completion_time }}</div>
+        </div>
+      {% else %}
+        <div class="block" style="background: #b2bec3;">Invalid</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <a href="/">← Back to Scheduler</a>
+</body>
+</html>
